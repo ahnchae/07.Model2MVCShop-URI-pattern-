@@ -157,7 +157,7 @@
 				<c:when test="${product.proTranCode=='2  '&& user.role=='admin'}">
 				구매 완료
 					<c:if test="${param.menu=='manage'}">
-						<a href="/updateTranCodeByProd.do?prodNo=${product.prodNo}&tranCode=2">배송하기</a>
+						<a href="/purchase/updateTranCodeByProd?prodNo=${product.prodNo}&tranCode=3">배송하기</a>
 					</c:if>
 				</c:when>
 				<c:when test="${product.proTranCode=='3  '&& user.role=='admin'}">
