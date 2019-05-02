@@ -23,7 +23,7 @@
 
 <div style="width:98%; margin-left:10px;">
 
-<form name="detailForm" action="/listProduct.do?menu=${param.menu}" method="post">
+<form name="detailForm" action="/product/listProduct?menu=${param.menu}" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -136,7 +136,7 @@
 		<td></td>
 			<c:if test="${param.menu != null}">
 				<% System.out.println("listProduct.jsp : param.menu : "+request.getParameter("menu")); %>
-				<td align="left"><a href="/getProduct.do?prodNo=${product.prodNo}${param.menu=='manage'&&product.proTranCode=='1  ' ? "&menu=manage" : "&menu=search"}">${product.prodName}</a></td>
+				<td align="left"><a href="/product/getProduct?prodNo=${product.prodNo}${param.menu=='manage'&&product.proTranCode=='1  ' ? "&menu=manage" : "&menu=search"}">${product.prodName}</a></td>
 			</c:if>
 <%--			<c:if test="${product.proTranCode!='1  '}">
 				<td align="left">${product.prodName}</td>

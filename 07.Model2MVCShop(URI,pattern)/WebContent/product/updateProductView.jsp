@@ -42,9 +42,9 @@ function fncAddProduct(num){
 		return;
 	}
 	if(num=='1'){
-		document.detailForm.action='/deleteProduct.do';
+		document.detailForm.action='/product/deleteProduct';
 	}else{	
-		document.detailForm.action='/updateProduct.do';
+		document.detailForm.action='/product/updateProduct';
 	}
 	document.detailForm.submit();
 }

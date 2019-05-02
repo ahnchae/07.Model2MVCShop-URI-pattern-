@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.model2.mvc.common.Page;
@@ -21,8 +22,9 @@ import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.product.ProductService;
 
 
-//==> 회원관리 Controller
+//==> 상품관리 Controller
 @Controller
+@RequestMapping("/product/*")
 public class ProductController {
 	
 	///Field
@@ -43,71 +45,74 @@ public class ProductController {
 		System.out.println(this.getClass());
 	}
 	
-	@RequestMapping("/addProductView.do")
+	@RequestMapping(value="/addProduct", method=RequestMethod.GET)
 	public String addProductView() throws Exception{
-		System.out.println("/addProductView.do");
+		System.out.println("/product/addProduct : GET");
 		
 		return "redirect:/product/addProductView.jsp";
 	}
 	
-	@RequestMapping("/addProduct.do")
+	@RequestMapping(value="/addProduct", method=RequestMethod.POST)
 	public String addProduct(@ModelAttribute("product") Product product) throws Exception{
-		System.out.println("/addProduct.do");
+		System.out.println("/product/addProduct : POST");
 		productService.addProduct(product);
 		return "forward:/product/addProduct.jsp";
 	}
 	
-	@RequestMapping("/getProduct.do")
+	@RequestMapping("/getProduct")
 	public String getProduct(@RequestParam("prodNo") int prodNo, @RequestParam(value="menu", required=false) String menu, @CookieValue(value="history", required=false) Cookie cookie, HttpServletResponse response, Model model) throws Exception{
-		System.out.println("/getProduct.do");
+		System.out.println("/product/getProduct");
 		
 		model.addAttribute("product", productService.getProduct(prodNo));
 		
 		//cookie 열어본 항목
 		if(cookie!=null) {
 			if( !(cookie.getValue().contains(new Integer(prodNo).toString())) ){
-				cookie.setValue(cookie.getValue()+","+prodNo);
+				cookie.setValue(cookie.getValue()+","+new Integer(prodNo).toString());
+				cookie.setPath("/");
 			}
 			response.addCookie(cookie);
 		}else {
-			response.addCookie(new Cookie("history", new Integer(prodNo).toString()));
+			Cookie doNotHaveCookie = new Cookie("history", new Integer(prodNo).toString());
+			doNotHaveCookie.setPath("/");
+			response.addCookie(doNotHaveCookie);
 		}
 		
 		if(menu!=null && menu.equals("manage")) {
-			return "forward:/updateProductView.do";
+			return "forward:/product/updateProductView.jsp?menu=manage";
 		}else {
 			return "forward:/product/getProduct.jsp";
 		}
 	}
 	
-	@RequestMapping("/updateProductView.do")
-	public String updateProductView() throws Exception{
-		System.out.println("/updateProductView.do");	
+	@RequestMapping(value="/updateProduct", method=RequestMethod.GET)
+	public String updateProduct() throws Exception{
+		System.out.println("/product/updateProduct : GET");	
 		
 		return "forward:/product/updateProductView.jsp";
 	}
 	
-	@RequestMapping("/updateProduct.do")
+	@RequestMapping(value="/updateProduct", method=RequestMethod.POST)
 	public String updateProduct(@ModelAttribute("product") Product product) throws Exception{
-		System.out.println("/updateProduct.do");
+		System.out.println("/product/updateProduct : POST");
 		
 		productService.updateProduct(product);
 		
-		return "forward:/getProduct.do";
+		return "forward:/product/getProduct";
 	}
 	
-	@RequestMapping("/deleteProduct.do")
+	@RequestMapping("/deleteProduct")
 	public String deleteProduct(@RequestParam("prodNo") int prodNo) throws Exception{
-		System.out.println("/deleteProduct.do");
+		System.out.println("/product/deleteProduct");
 		
 		productService.deleteProduct(prodNo);
 		
-		return "redirect:/listProduct.do?menu=manage";
+		return "redirect:/product/listProduct?menu=manage";
 	}
 	
-	@RequestMapping("/listProduct.do")
+	@RequestMapping("/listProduct")
 	public String listProduct(@ModelAttribute("search") Search search, Model model) throws Exception{
-		System.out.println("/listProduct.do");
+		System.out.println("/listProduct");
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
