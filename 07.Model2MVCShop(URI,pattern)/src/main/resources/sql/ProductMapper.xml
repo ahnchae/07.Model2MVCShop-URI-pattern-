@@ -34,7 +34,7 @@
 		p.prod_no, p.prod_name, p.prod_detail, p.manufacture_Day,
 		p.price, p.image_file, p.reg_date, t.tran_status_code
 		FROM product p, transaction t
-		WHERE t.prod_no(+) = p.prod_no AND p.prod_no=#{_parameter}
+		WHERE t.prod_no(+) = p.prod_no AND p.prod_no=#{_parameter} AND p.deleted IS NULL
 	</select>
 
 	<!-- SQL : UPDATE -->
@@ -69,7 +69,7 @@
 						p.reg_date, t.tran_status_code
 						FROM product p, transaction t
 						<where>
-							t.prod_no(+) = p.prod_no
+							t.prod_no(+) = p.prod_no AND p.deleted IS NULL  
 							<if test="searchCondition != null">
 								<if test="searchCondition==0 and searchKeyword!=''">
 									AND p.prod_no LIKE '%'||#{searchKeyword}||'%'
@@ -137,7 +137,7 @@
 						p.reg_date, t.tran_status_code
 						FROM product p, transaction t
 						<where>
-							t.prod_no(+) = p.prod_no
+							t.prod_no(+) = p.prod_no AND p.deleted IS NULL 
 							<if test="searchCondition != null">
 								<if test="searchCondition == 0 and searchKeyword!=''">
 									AND p.prod_no LIKE '%'||#{searchKeyword}||'%'
@@ -191,9 +191,12 @@
 						) countTable
 	</select>
 
-	<delete id="deleteProduct" parameterType="int">
-		DELETE product
+	<update id="deleteProduct" parameterType="int">
+		UPDATE product
+		<set>
+		deleted = '1'
+		</set>
 		WHERE prod_no=#{_parameter}
-	</delete>
+	</update>
 
 </mapper>

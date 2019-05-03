@@ -59,7 +59,7 @@
 		FROM transaction t
 		LEFT OUTER JOIN product p ON t.prod_no = p.prod_no
 		LEFT OUTER JOIN users u ON t.buyer_id = u.user_id
-		WHERE tran_no=#{_parameter}
+		WHERE tran_no=#{_parameter} AND t.deleted IS NULL 
 	</select>
 	
 	<select id="findPurchase2" parameterType="int" resultMap="purchaseSelectMap">
@@ -71,7 +71,7 @@
 		FROM transaction t
 		LEFT OUTER JOIN product p ON t.prod_no = p.prod_no
 		LEFT OUTER JOIN users u ON t.buyer_id = u.user_id 
-		WHERE t.prod_no=#{_parameter}
+		WHERE t.prod_no=#{_parameter} AND t.deleted IS NULL 
 	</select>
 
 	<!-- SQL : UPDATE -->
@@ -123,7 +123,8 @@
 						FROM transaction t
 						LEFT OUTER JOIN product p ON t.prod_no = p.prod_no
 						LEFT OUTER JOIN users u ON t.buyer_id = u.user_id
-						WHERE buyer_id = #{userId}
+						WHERE buyer_id = #{userId} AND t.deleted IS NULL 
+						ORDER BY tran_no
 						) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
 				WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
@@ -143,9 +144,12 @@
 	</select>
 
 	<!-- 구매취소 -->
-	<delete id="deletePurchase" parameterType="int">
-		DELETE transaction
+	<update id="deletePurchase" parameterType="int">
+		update transaction
+		<set>
+		deleted = '1' 
+		</set>
 		WHERE tran_no=#{_parameter}
-	</delete>
+	</update>
 
 </mapper>
