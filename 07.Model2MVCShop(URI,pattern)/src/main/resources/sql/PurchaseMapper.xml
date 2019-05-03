@@ -143,9 +143,9 @@
 	</select>
 
 	<!-- 구매취소 -->
-	<delete id="deletePurchase" parameterType="purchase">
+	<delete id="deletePurchase" parameterType="int">
 		DELETE transaction
-		WHERE tran_no=#{tranNo}
+		WHERE tran_no=#{_parameter}
 	</delete>
 
 </mapper>

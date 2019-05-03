@@ -65,7 +65,18 @@ public class ProductController {
 		
 		model.addAttribute("product", productService.getProduct(prodNo));
 		
-		//cookie 열어본 항목
+		//CookieValue String으로 받았을 떄 
+//		if(cookie!=null) {	
+//			Cookie cookieee = new Cookie("history", cookie+","+new Integer(prodNo).toString());
+//			cookieee.setPath("/");
+//			response.addCookie(cookieee);
+//		}else {
+//			Cookie cookieee = new Cookie("history", new Integer(prodNo).toString());
+//			cookieee.setPath("/");
+//			response.addCookie(cookieee);
+//		}
+		
+		//CookieValue Cookie로 받았을 때
 		if(cookie!=null) {
 			if( !(cookie.getValue().contains(new Integer(prodNo).toString())) ){
 				cookie.setValue(cookie.getValue()+","+new Integer(prodNo).toString());

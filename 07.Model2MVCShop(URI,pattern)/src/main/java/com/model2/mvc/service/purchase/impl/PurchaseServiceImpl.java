@@ -63,9 +63,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 
 	@Override
-	public void deletePurchase(Purchase purchase) throws Exception {
+	public void deletePurchase(int tranNo) throws Exception {
 		// TODO Auto-generated method stub
-		purchaseDao.deletePurchase(purchase);
+		purchaseDao.deletePurchase(tranNo);
 	}
 
 }

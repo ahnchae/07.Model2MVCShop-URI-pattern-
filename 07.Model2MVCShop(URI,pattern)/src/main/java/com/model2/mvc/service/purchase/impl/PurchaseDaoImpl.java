@@ -74,9 +74,9 @@ public class PurchaseDaoImpl implements PurchaseDao {
 	}
 
 	@Override
-	public void deletePurchase(Purchase purchase) throws Exception {
+	public void deletePurchase(int tranNo) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.delete("PurchaseMapper.deletePurchase", purchase);
+		sqlSession.delete("PurchaseMapper.deletePurchase", tranNo);
 	}
 
 }

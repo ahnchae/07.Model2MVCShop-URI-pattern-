@@ -137,7 +137,7 @@ public class PurchaseController {
 	public ModelAndView deletePurchase(@RequestParam("tranNo") int tranNo) throws Exception{
 		System.out.println("/purchase/deletePurchase");
 
-		purchaseService.deletePurchase(purchaseService.getPurchase(tranNo));
+		purchaseService.deletePurchase(tranNo);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("redirect:/purchase/listPurchase");
 		return modelAndView;
