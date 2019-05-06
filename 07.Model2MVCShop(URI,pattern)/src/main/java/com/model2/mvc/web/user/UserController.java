@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -77,6 +78,20 @@ public class UserController {
 		return "forward:/user/getUser.jsp";
 	}
 	
+	@RequestMapping("addCoupon")
+	public String addCoupon(@RequestParam("couponId") String couponId, HttpSession session) throws Exception{
+		System.out.println("/user/addCoupon/couponName");
+		if(couponId.equals("abcdefg")) {
+			
+			User user = (User)session.getAttribute("user");
+			user.setDiscountCoupon10("1");
+			userService.updateUser(user);
+			
+			session.setAttribute("user", userService.getUser(((User)session.getAttribute("user")).getUserId()));
+		
+		}
+		return "forward:../coupon.jsp";
+	}
 	//@RequestMapping("/updateUserView.do")
 	//public String updateUserView( @RequestParam("userId") String userId , Model model ) throws Exception{
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
@@ -90,6 +105,8 @@ public class UserController {
 		
 		return "forward:/user/updateUser.jsp";
 	}
+	
+	
 	
 	//@RequestMapping("/updateUser.do")
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )

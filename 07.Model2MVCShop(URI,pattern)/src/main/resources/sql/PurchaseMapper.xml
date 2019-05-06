@@ -17,6 +17,7 @@
 		<result property="receiverPhone" column="RECEIVER_PHONE" jdbcType="VARCHAR" />
 		<result property="tranCode" column="TRAN_STATUS_CODE" jdbcType="CHAR" />
 		<result property="tranNo" column="TRAN_NO" jdbcType="NUMERIC" />
+		<result property="soldPrice" column="sold_price" jdbcType="NUMERIC" />
 		<association property="buyer" javaType="user">
 			<id property="userId" column="buyer_id" jdbcType="VARCHAR"/> 
 			<result property="userName" column="user_name" jdbcType="VARCHAR"/>
@@ -45,14 +46,14 @@
 	<!-- SQL : INSERT -->
 	<insert id="insertPurchase" parameterType="purchase">
 		INSERT INTO transaction 
-		(tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date) 
-		VALUES(seq_transaction_tran_no.nextval, #{purchaseProd.prodNo:NUMERIC}, #{buyer.userId:VARCHAR}, #{paymentOption:CHAR}, #{receiverName:VARCHAR}, #{receiverPhone:VARCHAR}, #{divyAddr:VARCHAR}, #{divyRequest:VARCHAR}, 2, SYSDATE, #{divyDate:DATE})
+		(tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date, sold_price) 
+		VALUES(seq_transaction_tran_no.nextval, #{purchaseProd.prodNo:NUMERIC}, #{buyer.userId:VARCHAR}, #{paymentOption:CHAR}, #{receiverName:VARCHAR}, #{receiverPhone:VARCHAR}, #{divyAddr:VARCHAR}, #{divyRequest:VARCHAR}, 2, SYSDATE, #{divyDate:DATE}, #{purchaseProd.price:NUMERIC})
 	</insert>
 
 	<!-- SQL : SELECT ONE -->
 	<select id="findPurchase" parameterType="int" resultMap="purchaseSelectMap">
 		SELECT
-		tran_no, t.prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date, 
+		tran_no, t.prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date, sold_price,
 		prod_name , prod_detail , manufacture_day ,
 		price, image_file, p.reg_date prodreg,
 		user_name , password , role , ssn, cell_phone, addr, email , u.reg_date ureg
@@ -64,7 +65,7 @@
 	
 	<select id="findPurchase2" parameterType="int" resultMap="purchaseSelectMap">
 		SELECT
-		tran_no, t.prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date, 
+		tran_no, t.prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date, sold_price,
 		prod_name , prod_detail , manufacture_day ,
 		price, image_file, p.reg_date prodreg,
 		user_name , password , role , ssn, cell_phone, addr, email , u.reg_date ureg

@@ -20,9 +20,19 @@ public class User {
 	private String phone1;
 	private String phone2;
 	private String phone3;
+	/////////////////////////////////////////////////////
+	private String discountCoupon10;
 
 	
 	
+	public String getDiscountCoupon10() {
+		return discountCoupon10;
+	}
+
+	public void setDiscountCoupon10(String discountCoupon10) {
+		this.discountCoupon10 = discountCoupon10;
+	}
+
 	///Constructor
 	public User(){
 	}

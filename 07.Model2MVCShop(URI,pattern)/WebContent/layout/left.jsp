@@ -12,6 +12,9 @@
 function history(){
 	popWin = window.open("/history.jsp","popWin","left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
 }
+function coupon(){
+	popWin = window.open("/coupon.jsp","popWin","left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+}
 </script>
 </head>
 
@@ -99,6 +102,11 @@ function history(){
 			</tr>
 			<tr>
 				<td class="Depth03"><a href="javascript:history()">최근 본 상품</a></td>
+			</tr>
+			<tr>
+			<c:if test="${ !empty user }">
+				<td class="Depth03"><a href="javascript:coupon()">쿠폰 등록하기</a></td>
+			</c:if>
 			</tr>
 		</table>
 	</td>

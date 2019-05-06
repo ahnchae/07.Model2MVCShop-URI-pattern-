@@ -48,6 +48,16 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>상품 가격</td>
+		<td>${purchase.purchaseProd.price}</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>구매 가격</td>
+		<td>${purchase.soldPrice}</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>구매자이름</td>
 		<td>${purchase.buyer.userName}<%--<%= purchase.getBuyer().getUserName() --%></td>
 		<td></td>

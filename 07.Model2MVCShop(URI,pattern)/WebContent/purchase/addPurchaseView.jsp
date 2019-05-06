@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%--
@@ -108,7 +110,13 @@ function fncAddPurchase() {
 	<tr>
 		<td width="104" class="ct_write">가격</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${product.price}<%--<%= product.getPrice() --%></td>
+		<td class="ct_write01">${product.price}<%--<%= product.getPrice() --%>
+		<c:if test="${user.discountCoupon10=='1'}">
+		<br><hr>10% 할인쿠폰을 적용합니까?<input type="checkbox" name="couponPrice"/> 
+		<fmt:parseNumber var="price" value="${product.price*0.9}" integerOnly="true" />
+		<br>쿠폰 적용시 가격: ${price}
+		</c:if>
+		</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
